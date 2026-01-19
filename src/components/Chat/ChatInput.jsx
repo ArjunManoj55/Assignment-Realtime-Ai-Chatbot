@@ -1,4 +1,3 @@
-// src/components/Chat/ChatInput.jsx
 import React, { useState, useRef } from "react";
 import { FiArrowUp } from "react-icons/fi";
 
@@ -55,14 +54,14 @@ export default function ChatInput({ onSend, disabled = false, generatedResponse 
           onChange={handleChange}
           onKeyDown={handleKeyDown}
           disabled={disabled}
-          className="flex-1 resize-none overflow-hidden border border-gray-300 rounded-2xl px-4 py-2 leading-5 disabled:bg-gray-100 disabled:cursor-not-allowed"
-          style={{ maxHeight: "120px" }} // prevents infinite growth
+          className="flex-1 resize-none overflow-hidden border border-gray-300 rounded-2xl px-4 py-2 leading-5 disabled:bg-gray-100 disabled:cursor-not-allowed outline-none"
+          style={{ maxHeight: "120px" }}  
         />
 
         <button
           onClick={handleSend}
           disabled={disabled || message.trim() === ""}
-          className="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+          className="p-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed "
         >
           <FiArrowUp size={18} />
         </button>

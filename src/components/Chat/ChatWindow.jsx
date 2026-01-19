@@ -5,7 +5,6 @@ import ChatInput from "./ChatInput";
 export default function ChatWindow({ messages, onSend, isAiTyping }) {
   const scrollRef = useRef(null);
 
-  // Auto-scroll to bottom on new messages
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
@@ -13,7 +12,7 @@ export default function ChatWindow({ messages, onSend, isAiTyping }) {
   }, [messages, isAiTyping]);
 
   return (
-    <div className="flex flex-col h-[600px] border border-gray-300 rounded-md bg-white">
+    <div className="flex flex-col h-[600px] border border-gray-300   bg-white">
       <div
         ref={scrollRef}
         className="flex-1 p-4 overflow-y-auto overflow-x-hidden"

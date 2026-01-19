@@ -3,7 +3,10 @@ import { useState, useEffect, useRef, useCallback } from "react";
 export default function useWebSocket(url) {
   const [messages, setMessages] = useState([]);
   const [isAiTyping, setIsAiTyping] = useState(false);
+  const [live, setLive] = useState(false);
+
   const wsRef = useRef(null);
+  const greetingSentRef = useRef(false);  
 
   useEffect(() => {
     if (!url) return;
@@ -13,6 +16,27 @@ export default function useWebSocket(url) {
 
     ws.onopen = () => {
       console.log("WebSocket connected:", url);
+      setLive(true);
+
+      // greeting once
+      if (!greetingSentRef.current) {
+        greetingSentRef.current = true;
+
+        // to make it look like ai
+        setIsAiTyping(true);
+
+        setTimeout(() => {
+          setMessages((prev) => [
+            ...prev,
+            {
+              sender: "ai",
+              message: "come on talk....., no im not making a seperate call to backend for the fisrt text its the websocket talking with a 1.5sec delay, ",
+              timestamp: Date.now(),
+            },
+          ]);
+          setIsAiTyping(false);  
+        }, 1500);  
+      }
     };
 
     ws.onmessage = (event) => {
@@ -29,7 +53,7 @@ export default function useWebSocket(url) {
             ...prev,
             {
               sender: data.message.sender,
-              message: data.message.text, // ✅ normalize
+              message: data.message.text,
               timestamp: Date.now(),
             },
           ]);
@@ -50,6 +74,7 @@ export default function useWebSocket(url) {
 
     ws.onclose = () => {
       console.log("WebSocket disconnected");
+      setLive(false);
     };
 
     return () => {
@@ -60,9 +85,7 @@ export default function useWebSocket(url) {
   const sendMessage = useCallback((text) => {
     if (wsRef.current?.readyState !== WebSocket.OPEN) return;
 
-    wsRef.current.send(
-      JSON.stringify({ type: "message", message: text })
-    );
+    wsRef.current.send(JSON.stringify({ type: "message", message: text }));
 
     setMessages((prev) => [
       ...prev,
@@ -74,5 +97,5 @@ export default function useWebSocket(url) {
     ]);
   }, []);
 
-  return { messages, isAiTyping, sendMessage };
+  return { messages, isAiTyping, sendMessage, live };
 }
