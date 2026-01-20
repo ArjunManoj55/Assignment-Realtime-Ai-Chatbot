@@ -5,6 +5,8 @@ This project is frontend-focused, with a minimal backend WebSocket server requir
 
 Built in a time-constrained environment with focus on real-time communication, UX, and GenAI integration.
 
+Video Walkthrough - https://youtu.be/QBu7i8qQMPc
+
 ---
 
 ## ✨ Features
