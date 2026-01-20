@@ -56,7 +56,7 @@ const ChatMessage = memo(function ChatMessage({
         }`}
       >
         {/* Avatar */}
-        <div className="pt-1 flex-shrink-0">
+        <div className="pt-1 shrink-0">
           {isUser ? (
             <FaUser className="w-4 h-4 text-gray-500" />
           ) : (
@@ -89,7 +89,7 @@ const ChatMessage = memo(function ChatMessage({
 
           {/* Message content */}
           {isUser ? (
-            <span className="text-sm leading-relaxed break-words whitespace-pre-wrap">
+            <span className="text-sm leading-relaxed wrap-break-word whitespace-pre-wrap">
               {message}
             </span>
           ) : (
@@ -99,7 +99,7 @@ const ChatMessage = memo(function ChatMessage({
                 p: (props) => (
                   <p
                     {...props}
-                    className="text-sm leading-relaxed break-words whitespace-pre-wrap"
+                    className="text-sm leading-relaxed wrap-break-word whitespace-pre-wrap"
                   />
                 ),
                 code: ({ children, ...props }) => (

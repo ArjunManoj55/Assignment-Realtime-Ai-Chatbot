@@ -24,6 +24,7 @@ Built in a time-constrained environment with focus on real-time communication, U
 ## 🧱 Tech Stack
 
 Frontend:
+
 - React (Vite)
 - JavaScript
 - WebSockets
@@ -31,6 +32,7 @@ Frontend:
 - Tailwind CSS
 
 Backend:
+
 - Node.js
 - Google Gemini GenAI API
 
@@ -41,30 +43,6 @@ Backend:
 Google Gemini 3 Flash Preview model:
 
 https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent
-
----
-
-## 📂 Project Structure
-
-/
-├── backend/
-│   ├── server.js
-│   ├── package.json
-│   └── .env
-├── src/
-│   ├── components/
-│   │   └── Chat/
-│   │       ├── ChatWindow.jsx
-│   │       ├── ChatMessage.jsx
-│   │       └── ChatInput.jsx
-│   ├── hooks/
-│   │   └── useWebSocket.js
-│   ├── pages/
-│   │   └── Home.jsx
-│   └── main.jsx
-├── .env
-├── package.json
-└── README.md
 
 ---
 
@@ -125,7 +103,7 @@ npm install react-markdown remark-gfm
 ## 🧪 UX Details
 
 - AI typing indicator does not re-render existing messages
-- ai agent online/ offline status 
+- ai agent online/ offline status
 - Copy button feedback for AI messages
 - Auto-scroll on new messages
 - Input disabled while AI is typing
@@ -149,5 +127,3 @@ npm install react-markdown remark-gfm
 - Google Gemini GenAI API
 
 ---
-
-

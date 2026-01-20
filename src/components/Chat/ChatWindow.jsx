@@ -19,7 +19,7 @@ export default function ChatWindow({ messages, onSend, isAiTyping, onNewChat }) 
   );
 
   return (
-    <div className="flex flex-col h-[700px] border border-gray-300 bg-white">
+    <div className="flex flex-col h-195 border border-gray-300 bg-white">
       <div ref={scrollRef} className="flex-1 p-4 overflow-y-auto overflow-x-hidden">
         {messages.length > 0 ? (
           messages.map((msg) => (
