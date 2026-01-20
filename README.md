@@ -1,16 +1,153 @@
-# React + Vite
+# 🚀 Real-Time AI Chatbot with Streaming (React + WebSockets + Gemini)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Build a real-time AI chatbot with streaming responses using WebSockets, React, and Google Gemini GenAI APIs.  
+This project is frontend-focused, with a minimal backend WebSocket server required only to enable real-time streaming.
 
-Currently, two official plugins are available:
+Built in a time-constrained environment with focus on real-time communication, UX, and GenAI integration.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## ✨ Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Real-time AI responses (streaming) using WebSockets
+- Google Gemini API (Gemini 3 Flash Preview model)
+- AI typing animation
+- New Chat (reset conversation)
+- Clipboard copy for AI messages
+- Markdown rendering in AI responses (tables, code blocks, lists)
+- Message persistence using localStorage
+- Live WebSocket connection status
+- Built with React + Vite
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🧱 Tech Stack
+
+Frontend:
+- React (Vite)
+- JavaScript
+- WebSockets
+- react-markdown + remark-gfm
+- Tailwind CSS
+
+Backend:
+- Node.js
+- Google Gemini GenAI API
+
+---
+
+## 🧠 AI Model Used
+
+Google Gemini 3 Flash Preview model:
+
+https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent
+
+---
+
+## 📂 Project Structure
+
+/
+├── backend/
+│   ├── server.js
+│   ├── package.json
+│   └── .env
+├── src/
+│   ├── components/
+│   │   └── Chat/
+│   │       ├── ChatWindow.jsx
+│   │       ├── ChatMessage.jsx
+│   │       └── ChatInput.jsx
+│   ├── hooks/
+│   │   └── useWebSocket.js
+│   ├── pages/
+│   │   └── Home.jsx
+│   └── main.jsx
+├── .env
+├── package.json
+└── README.md
+
+---
+
+## 🔐 Environment Variables
+
+Frontend (.env):
+
+VITE_WS_URL= websocket url
+
+Backend (backend/.env):
+
+GEMINI_API_KEY=your_google_gemini_api_key
+
+---
+
+## ▶️ Running the Project
+
+1. Install backend dependencies
+
+cd backend
+npm install
+
+2. Start WebSocket server
+
+node server.js
+
+3. Install frontend dependencies
+
+npm install
+
+4. Start frontend app
+
+npm run dev
+
+App runs at:
+http://localhost:5173
+
+---
+
+## 📦 Required NPM Packages
+
+WebSocket:
+npm install ws
+
+Markdown rendering:
+npm install react-markdown remark-gfm
+
+---
+
+## 💾 Message Persistence
+
+- Messages are saved automatically to localStorage
+- Messages are restored on page refresh
+- New Chat clears localStorage and starts a fresh conversation
+
+---
+
+## 🧪 UX Details
+
+- AI typing indicator does not re-render existing messages
+- ai agent online/ offline status 
+- Copy button feedback for AI messages
+- Auto-scroll on new messages
+- Input disabled while AI is typing
+
+---
+
+## ⚠️ Notes
+
+- Frontend-first implementation
+- Backend exists only for WebSocket streaming
+- No authentication included
+- Not production-hardened
+
+---
+
+## 🛠 Built With
+
+- vite@latest
+- React
+- WebSockets
+- Google Gemini GenAI API
+
+---
+
+

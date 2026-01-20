@@ -28,7 +28,7 @@ export default function ChatWindow({ messages, onSend, isAiTyping, onNewChat }) 
               message={msg.message}
               sender={msg.sender}
               timestamp={msg.timestamp}
-              isTyping={false} // typing handled separately
+              isTyping={false}  
             />
           ))
         ) : (
@@ -51,10 +51,7 @@ export default function ChatWindow({ messages, onSend, isAiTyping, onNewChat }) 
       <div className="flex justify-center mt-3">
         <button
           onClick={onNewChat}
-          className="text-xs px-4 py-1.5 rounded-full
-                     bg-gray-100 hover:bg-gray-200
-                     text-gray-700 border border-gray-300
-                     transition"
+          className="text-xs px-4 py-1.5 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 border border-gray-300 transition"
         >
           New Chat
         </button>

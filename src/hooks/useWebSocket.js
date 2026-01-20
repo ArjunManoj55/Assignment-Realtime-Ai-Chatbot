@@ -15,9 +15,9 @@ export default function useWebSocket(url) {
   const greetingSentRef = useRef(false);
 
   const firstChunk =
-    "come on talk.....im live, no im not making a separate call to backend for the first text; it's the websocket talking with a 1.5sec delay.";
+    "come on talk.....im live, no im not making a separate call to backend for the first text, it's the websocket talking with a 1.5sec delay.";
 
-  // Helper: generate stable unique ID
+  // generate stable unique ID
   const generateId = () =>
     Date.now() + "-" + Math.random().toString(36).substr(2, 9);
 
@@ -26,6 +26,7 @@ export default function useWebSocket(url) {
     localStorage.setItem("chatMessages", JSON.stringify(messages));
   }, [messages]);
 
+  // fetch the data and setmessages
   useEffect(() => {
     if (!url) return;
 
