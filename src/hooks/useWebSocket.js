@@ -1,12 +1,30 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 
 export default function useWebSocket(url) {
-  const [messages, setMessages] = useState([]);
+  
+  // Load messages from localStorage on hook initialization
+  const [messages, setMessages] = useState(() => {
+    const saved = localStorage.getItem("chatMessages");
+    return saved ? JSON.parse(saved) : [];
+  });
+
   const [isAiTyping, setIsAiTyping] = useState(false);
   const [live, setLive] = useState(false);
 
   const wsRef = useRef(null);
-  const greetingSentRef = useRef(false);  
+  const greetingSentRef = useRef(false);
+
+  const firstChunk =
+    "come on talk.....im live, no im not making a separate call to backend for the first text; it's the websocket talking with a 1.5sec delay.";
+
+  // Helper: generate stable unique ID
+  const generateId = () =>
+    Date.now() + "-" + Math.random().toString(36).substr(2, 9);
+
+  // Save messages to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem("chatMessages", JSON.stringify(messages));
+  }, [messages]);
 
   useEffect(() => {
     if (!url) return;
@@ -18,24 +36,22 @@ export default function useWebSocket(url) {
       console.log("WebSocket connected:", url);
       setLive(true);
 
-      // greeting once
-      if (!greetingSentRef.current) {
+      // Send greeting only once Send greeting only if no messages exist
+      if (!greetingSentRef.current && messages.length === 0) {
         greetingSentRef.current = true;
-
-        // to make it look like ai
         setIsAiTyping(true);
 
         setTimeout(() => {
-          setMessages((prev) => [
-            ...prev,
+          setMessages([
             {
+              id: generateId(),
               sender: "ai",
-              message: "come on talk....., no im not making a seperate call to backend for the fisrt text its the websocket talking with a 1.5sec delay, ",
+              message: firstChunk,
               timestamp: Date.now(),
             },
           ]);
-          setIsAiTyping(false);  
-        }, 1500);  
+          setIsAiTyping(false);
+        }, 1500);
       }
     };
 
@@ -52,6 +68,7 @@ export default function useWebSocket(url) {
           setMessages((prev) => [
             ...prev,
             {
+              id: generateId(),
               sender: data.message.sender,
               message: data.message.text,
               timestamp: Date.now(),
@@ -77,11 +94,10 @@ export default function useWebSocket(url) {
       setLive(false);
     };
 
-    return () => {
-      ws.close();
-    };
+    return () => ws.close();
   }, [url]);
 
+  // Send user message
   const sendMessage = useCallback((text) => {
     if (wsRef.current?.readyState !== WebSocket.OPEN) return;
 
@@ -90,6 +106,7 @@ export default function useWebSocket(url) {
     setMessages((prev) => [
       ...prev,
       {
+        id: generateId(),
         sender: "user",
         message: text,
         timestamp: Date.now(),
@@ -97,5 +114,29 @@ export default function useWebSocket(url) {
     ]);
   }, []);
 
-  return { messages, isAiTyping, sendMessage, live };
+  // Start new chat
+  const newChat = () => {
+    setMessages([]);
+    localStorage.removeItem("chatMessages"); // Clear localStorage
+    setIsAiTyping(true);
+    greetingSentRef.current = false;
+
+    if (wsRef.current) {
+      wsRef.current.send(JSON.stringify({ type: "reset_conversation" }));
+    }
+
+    setTimeout(() => {
+      const firstMsg = {
+        id: generateId(),
+        sender: "ai",
+        message: firstChunk,
+        timestamp: Date.now(),
+      };
+      setMessages([firstMsg]);
+      setIsAiTyping(false);
+      greetingSentRef.current = true;
+    }, 1500);
+  };
+
+  return { messages, isAiTyping, sendMessage, live, newChat };
 }
